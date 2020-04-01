@@ -37,8 +37,9 @@ export default {
   },
   sendFile(file, config, is_sending_s3) {
     var handler = (is_sending_s3) ? this.setResponseHandler : this.sendS3Handler;
-
-    return this.getSignedURL(file, config)
+    var getSignedURL = config.getSignedURL || this.getSignedURL
+    
+    return getSignedURL(file, config)
       .then((response) => {return handler(response, file)})
       .catch((error) => { return error; });
   },
